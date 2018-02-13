@@ -1,0 +1,34 @@
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,200,400,700" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script src="./moment.min.js"></script>
+    <script src="./rrule.js"></script>
+</head>
+<body>
+    <div id="screensaver"></div>
+    <div id="bg"></div>
+    <div class="flexbox">
+        <div id="time">
+            <span class="time"></span>
+            <span class="ampm"></span>
+            <div class="date"></div>
+        </div>
+        <div id="meetings">
+            <input id="start" type="text" placeholder="Start or join Hangout" />
+            <div id="meeting_list">
+                <a id="list_status">Retrieving your calendar</a>
+            </div>
+            <div class="recent">
+                <div class="recent_icon"></div>
+                <div class="recent_list">
+                    <a id="recent_1"></a>
+                    <a id="recent_2"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="timezones.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
