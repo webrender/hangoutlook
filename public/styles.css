@@ -1,0 +1,241 @@
+html, body {
+    font-family: Roboto, sans-serif;
+    background: black;
+    color: white;
+    margin: 0;
+}
+#bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7
+}
+#time {
+    font-size: 24px;
+    font-weight: 100;
+    text-shadow: -1px -1px 0 rgba(0,0,0,.2), 1px -1px 0 rgba(0,0,0,.2), -1px 1px 0 rgba(0,0,0,.2), 1px 1px 0 rgba(0,0,0,.2);
+    width: 55%;
+    min-width: 450px;
+    text-align: center;
+    text-transform: uppercase;
+}
+.time {
+    font-size: 186px;
+}
+.date {
+    text-align: center;
+    position: relative;
+    top: -20px;
+}
+.flexbox {
+    display: flex;
+    height: 100%;
+    padding: 20% 20px;
+    box-sizing: border-box;
+    align-items: center;
+    position: relative;
+    min-width: 915px;
+}
+#meetings {
+    width: 430px;
+    min-height: 100px;
+    background: white;
+    border-radius: 3px;
+    margin: 10px;
+    color: #404040;
+}
+#start {
+    padding: 30px 20px;
+    font-weight: 200;
+    border: 0;
+    border-bottom: 1px solid #E5E5E5;
+    position: relative;
+    transition: background-color 0.5s;
+    background: url('plus_green.png') center right 14px no-repeat white;
+    background-size: 24px;
+    display: block;
+    font-size: 15px;
+    width: 100%;
+    color: #404040;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    transition: all 0.3s;
+}
+#start:hover {
+    cursor: pointer;
+    background-color: #F5F5F5;
+}
+#start:focus {
+    background: url('plus.png') center right 14px no-repeat #427fed;
+    background-size: 24px;
+    outline: none;
+    width: 460px;
+    left: -13px;
+    height: 48px;
+    position: relative;
+    box-shadow: rgba(0,0,0,0.15) 0 10px 20px 0, rgba(0,0,0,0.3) 0 0 30px 0;
+    border-bottom: none;
+    margin-top: 20px;
+    font-weight: 200;
+    padding: 40px 30px;
+    color: white;
+    border-radius: 0;
+}
+#start::placeholder {
+    color: #404040;
+    font-weight: 700;
+}
+#start:focus::placeholder {
+    color: rgba(255,255,255,0.7);
+    font-weight: 200;
+}
+#meeting_list {
+    list-style-type: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+#meeting_list a {
+    display: flex;
+    padding: 30px 20px;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid #E5E5E5;
+    transition: all 0.3s;
+    position: relative;
+}
+#meeting_list a:focus {
+    background: #427fed;
+    outline: none;
+    width: 420px;
+    left: -13px;
+    height: 48px;
+    position: relative;
+    box-shadow: rgba(0,0,0,0.15) 0 10px 20px 0, rgba(0,0,0,0.3) 0 0 30px 0;
+    border-bottom: none;
+    color: white;
+}
+#meeting_list a:focus .event_room {
+    color: rgba(255,255,255,0.7);
+}
+#meeting_list a:focus .event_duration {
+    color: rgba(255,255,255,0.7);
+    display: block;
+}
+a#list_status {
+    display: block;
+    text-align: center;
+    padding: 30px 20px;
+}
+#meeting_list li:hover {
+    background-color: #F5F5F5;
+    cursor: pointer;
+}
+.event_time {
+    font-size: 14px;
+    margin-right: 20px;
+}
+.event_description {
+    font-size: 15px;
+    text-align: left;
+}
+.event_duration {
+    display: none;
+    color: #AAAAAA;
+    font-weight: 200;
+    text-align: left;
+    margin: 2px 0;
+}
+.event_room {
+    display: block;
+    color: #AAAAAA;
+    font-weight: 200;
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 250px;
+}
+.recent {
+    display: flex;
+    width: 100%;
+    position: relative;
+    transition: all 0.3s;
+}
+.recent:focus-within {
+    background: #427fed;
+    box-shadow: rgba(0,0,0,0.15) 0 10px 20px 0, rgba(0,0,0,0.3) 0 0 30px 0;
+    width: 460px;
+    left: -13px;
+    top: -13px;
+}
+.recent_icon {
+    background: url('clock.png') no-repeat;
+    margin: 40px 30px;
+    height: 24px;
+    width: 24px;
+}
+.recent:focus-within .recent_icon {
+    background: url('clock_white.png') no-repeat;
+}
+.recent_list {
+    width: calc(100% - 84px);
+}
+#recent_1, #recent_2 {
+    display: block;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 20px 20px 20px 10px;
+    outline: none;
+    color: #AAAAAA;
+    min-height: 10px;
+}
+#recent_1 {
+    border-bottom: 1px solid #E5E5E5;
+}
+.recent:focus-within #recent_1, .recent:focus-within #recent_2 {
+    color: rgba(255,255,255,0.7);
+    padding-left: 20px;
+}
+.recent:focus-within #recent_1:focus, .recent:focus-within #recent_2:focus {
+    color: white;
+}
+.recent:focus-within #recent_1 {
+    border-bottom: none;
+}
+.minLeft {
+    position: absolute;
+    right: 20px;
+    padding: 8px 10px;
+    font-size: 14px;
+    display: block;
+}
+.minLeft.-now {
+    background: #67AF4B;
+    color: white;
+    border-radius: 2px;
+    font-weight: 300;
+}
+#meeting_list a:focus .minLeft.-now {
+    color: #427fed;
+    background: white;
+}
+#screensaver {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: black;
+  display: none;
+  z-index: 1000;
+}
+#icon {
+  background: url('hangoutlook.png') no-repeat;
+  width: 244px;
+  height: 285px;
+  background-size: contain;
+  position: fixed;
+}
