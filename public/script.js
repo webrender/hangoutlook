@@ -230,7 +230,8 @@ var clockUpdate = () => {
                     }
                     var rgx = new RegExp('(?:https?:\/\/hangouts.google.com\/hangouts\/_\/' + data.domain + '\/)([a-zA-Z-]+)', 'g');
                     var callRegex = rgx.exec(displayedEvents[i].DESCRIPTION);
-                    var callName, callUrl;
+                    var callName = '';
+                    var callUrl = '';
                     if (callRegex) {
                       callName = callRegex[1];
                       callUrl = `https://hangouts.google.com/hangouts/_/${data.domain}/${callName}`;
