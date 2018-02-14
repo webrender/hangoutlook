@@ -53,27 +53,24 @@ var clickHandler = e => {
         link = link.parentNode;
     }
   
-    if (e.altKey && link.href)
+    if (e.altKey && link.href.indexOf('hangouts/_' > -1))
       link.href = link.href.replace('hangouts/_', 'present');
   
-    if (link.id.indexOf('event_') > -1) {
-        addRecentMeeting(
-            document.querySelector(`#${link.id} .event_room`).innerHTML,
-            () => {window.location = link.href}
-        );
-    }
-    if (link.id.indexOf('recent_') > -1) {
-        addRecentMeeting(
-            link.innerHTML,
-            () => {window.location = link.href}
-        );
-    }
+    addRecentMeeting(
+      link.href,
+      () => {window.location = link.href}
+    );
 }
 var recentMeetings = () => {
     if (window.localStorage.recentMeetings) {
         JSON.parse(window.localStorage.recentMeetings).forEach((m,i) => {
-            document.getElementById(`recent_${i+1}`).innerHTML = m;
-            document.getElementById(`recent_${i+1}`).href = `https://hangouts.google.com/hangouts/_/${domain}/${m}`
+            if (m.indexOf('://') > -1) {
+              document.getElementById(`recent_${i+1}`).innerHTML = m.substr(m.lastIndexOf('/') + 1);
+              document.getElementById(`recent_${i+1}`).href = m;
+            } else {
+              document.getElementById(`recent_${i+1}`).innerHTML = m;
+              document.getElementById(`recent_${i+1}`).href = `https://hangouts.google.com/hangouts/_/${domain}/${m}` 
+            }
             document.getElementById(`recent_${i+1}`).addEventListener('click', clickHandler, false);
         });
     }
@@ -94,20 +91,20 @@ var addRecentMeeting = (meeting, callback) => {
         callback();
 }
 var keyDownHandler = e => {
-    if (e.altKey && e.target.href)
+    if (e.altKey && e.target.href && e.target.href.indexOf('hangouts/_' > -1))
       e.target.href = e.target.href.replace('hangouts/_', 'present');
   
     if (e.target.id.indexOf('event_') > -1 && e.keyCode == 13) {
         e.preventDefault();
         addRecentMeeting(
-            document.querySelector(`#${e.target.id} .event_room`).innerHTML,
+            e.target.href,
             () => {window.location = e.target.href}
         );
     }
     if (e.target.id.indexOf('recent_') > -1 && e.keyCode == 13) {
         e.preventDefault();
         addRecentMeeting(
-            e.target.innerHTML,
+            e.target.href,
             () => {window.location = e.target.href}
         );
     }
@@ -115,7 +112,7 @@ var keyDownHandler = e => {
 var keyHandler = e => {
     if (e.target.id == "start" && e.keyCode == 13 && document.getElementById('start').value) {
         addRecentMeeting(
-            document.getElementById('start').value,
+            `https://hangouts.google.com/hangouts/_/${domain}/${document.getElementById('start').value}`,
             () => {
               window.location = e.altKey ?
                 `https://hangouts.google.com/present/${domain}/${document.getElementById('start').value}` : 
@@ -238,11 +235,13 @@ var clockUpdate = () => {
                     } else {
                       data.patterns.forEach(pattern => {
                         if (!callName) {
-                          rgx = new RegExp('(https?://' + pattern + '[^>]*)', 'g');
+                          rgx = new RegExp('(https?://' + pattern + '[^>\\\\(\\n)]*)', 'g');
+                          console.log(rgx);
                           var patternCheck = rgx.exec(displayedEvents[i].DESCRIPTION);
                           if (patternCheck) {
-                            callName = patternCheck[1];
-                            callUrl = callName;
+                            console.log(patternCheck[1]);
+                            callName = patternCheck[1].substr(patternCheck[1].lastIndexOf('/') + 1);
+                            callUrl = patternCheck[1];
                           }
                         }
                       });
