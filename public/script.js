@@ -195,8 +195,6 @@ var clockUpdate = () => {
               event.DTSTART.value = moment(event.DTSTART.value).add(offset, "hours");
               event.DTEND.value = moment(event.DTEND.value).add(offset, "hours");
             }            
-          
-  
             if (
                 moment(event.DTEND.value).unix() > moment().unix() &&
                 moment(event.DTEND.value).unix() < moment().endOf('day').unix()
@@ -207,7 +205,7 @@ var clockUpdate = () => {
                 var rule = rrulestr(event.RRULE, {
                     dtstart: moment(event.DTSTART.value).toDate()
                 });
-                var validDates = rule.between(moment().startOf('hour').add(offset,"hours").toDate(), moment().endOf('day').add(offset,"hours").toDate());
+                var validDates = rule.between(moment().startOf('hour').add(offset - 0.016,"hours").toDate(), moment().endOf('day').add(offset,"hours").toDate());
                 if (validDates.length > 0) {
                     event.DTSTART.value = validDates[0];
                     validEvents.push(event);
@@ -236,10 +234,8 @@ var clockUpdate = () => {
                       data.patterns.forEach(pattern => {
                         if (!callName) {
                           rgx = new RegExp('(https?://' + pattern + '[^>\\\\(\\n)]*)', 'g');
-                          console.log(rgx);
                           var patternCheck = rgx.exec(displayedEvents[i].DESCRIPTION);
                           if (patternCheck) {
-                            console.log(patternCheck[1]);
                             callName = patternCheck[1].substr(patternCheck[1].lastIndexOf('/') + 1);
                             callUrl = patternCheck[1];
                           }
