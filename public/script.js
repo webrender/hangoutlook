@@ -182,7 +182,7 @@ var clockUpdate = () => {
               offset = localOffset - parseInt(utcCheck[1])
             } else if (timezones.find(t=>{return t.value == event.DTSTART.params[0].TZID})) {
               var timezone = timezones.find(t=>{return t.value == event.DTSTART.params[0].TZID});
-              offset = localOffset - timezone.offset;
+              offset = localOffset - timezone.offset + (timezone.isdst ? 1 : 0);
             }
           
             if (event.DTSTART.value.indexOf(':') > -1) {
