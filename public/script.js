@@ -173,18 +173,29 @@ var clockUpdate = () => {
     }).then(function(data) {
         domain = data.domain;
         var validEvents = [];
-        var localOffset = -(new Date().getTimezoneOffset() / 60);
+      
+        Date.prototype.stdTimezoneOffset = function () {
+          var jan = new Date(this.getFullYear(), 0, 1);
+          var jul = new Date(this.getFullYear(), 6, 1);
+          return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+        }
+
+        Date.prototype.isDstObserved = function () {
+          return this.getTimezoneOffset() < this.stdTimezoneOffset();
+        }
+
+        var now = new Date();
+        var localOffset = -(now.getTimezoneOffset() / 60);
       
         data.events.forEach(event => {
             var offset = 0;
             var utcCheck = /UTC([\+-][0-9].)/g.exec(event.DTSTART.params[0].TZID);
             if (utcCheck) {
-              offset = localOffset - parseInt(utcCheck[1])
+              offset = localOffset - parseInt(utcCheck[1]) - (now.isDstObserved() ? 1 : 0);
             } else if (timezones.find(t=>{return t.value == event.DTSTART.params[0].TZID})) {
               var timezone = timezones.find(t=>{return t.value == event.DTSTART.params[0].TZID});
               offset = localOffset - timezone.offset;
             }
-          
             if (event.DTSTART.value.indexOf(':') > -1) {
                 event.DTSTART.value = event.DTSTART.value.split(':')[1]
             }
@@ -205,7 +216,7 @@ var clockUpdate = () => {
                 var rule = rrulestr(event.RRULE, {
                     dtstart: moment(event.DTSTART.value).toDate()
                 });
-                var validDates = rule.between(moment().startOf('hour').add(offset - 0.016,"hours").toDate(), moment().endOf('day').add(offset,"hours").toDate());
+                var validDates = rule.between(moment().startOf('hour').subtract(1,"minute").local().toDate(), moment().endOf('day').local().toDate());
                 if (validDates.length > 0) {
                     event.DTSTART.value = validDates[0];
                     validEvents.push(event);
