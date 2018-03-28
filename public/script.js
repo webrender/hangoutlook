@@ -53,7 +53,7 @@ var clickHandler = e => {
         link = link.parentNode;
     }
   
-    if (e.altKey && link.href.indexOf('hangouts/_' > -1))
+    if (e.shiftKey && link.href.indexOf('hangouts/_' > -1))
       link.href = link.href.replace('hangouts/_', 'present');
   
     addRecentMeeting(
@@ -91,7 +91,7 @@ var addRecentMeeting = (meeting, callback) => {
         callback();
 }
 var keyDownHandler = e => {
-    if (e.altKey && e.target.href && e.target.href.indexOf('hangouts/_' > -1))
+    if (e.shiftKey && e.target.href && e.target.href.indexOf('hangouts/_' > -1))
       e.target.href = e.target.href.replace('hangouts/_', 'present');
   
     if (e.target.id.indexOf('event_') > -1 && e.keyCode == 13) {
@@ -114,7 +114,7 @@ var keyHandler = e => {
         addRecentMeeting(
             `https://hangouts.google.com/hangouts/_/${domain}/${document.getElementById('start').value}`,
             () => {
-              window.location = e.altKey ?
+              window.location = e.shiftKey ?
                 `https://hangouts.google.com/present/${domain}/${document.getElementById('start').value}` : 
                 `https://hangouts.google.com/hangouts/_/${domain}/${document.getElementById('start').value}`;
                   }
