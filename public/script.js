@@ -244,11 +244,11 @@ var clockUpdate = () => {
                     } else {
                       data.patterns.forEach(pattern => {
                         if (!callName) {
-                          rgx = new RegExp('(https?://' + pattern + '[^>\\\\(\\n)]*)', 'g');
+                          rgx = new RegExp('(' + pattern + '[^>\\\\(\\n)]*)', 'g');
                           var patternCheck = rgx.exec(displayedEvents[i].DESCRIPTION);
                           if (patternCheck) {
                             callName = patternCheck[1].substr(patternCheck[1].lastIndexOf('/') + 1);
-                            callUrl = patternCheck[1];
+                            callUrl = 'http://' + patternCheck[1];
                           }
                         }
                       });
